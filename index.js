@@ -7,12 +7,16 @@ const path = require('path');
 
 const app = express();
 const userRouter = require('./routes/userRouter');
+const landlordRouter = require('./routes/landlordRouter');
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/users', userRouter);
+app.use('/landlords', landlordRouter);
+
+
 
 
 app.listen(process.env.PORT, () => {

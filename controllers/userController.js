@@ -16,8 +16,8 @@ const userController = {
     newUser.lastname = lastname;   
     newUser.email = email;
     newUser.password = password;
-    
-
+    const searchEmail = await User.findOne({ email: email });
+    if (!searchEmail){
     try {
       const savedUser = await newUser.save();
       res.json(savedUser);
@@ -25,6 +25,9 @@ const userController = {
       console.log("Error");
     }
     res.json();
+    }else{
+      res.json("user exists")
+    }
   },
   loginUser: async function (req, res) {
     const { email, password } = req.body;
