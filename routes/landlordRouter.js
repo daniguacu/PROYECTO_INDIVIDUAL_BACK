@@ -6,5 +6,6 @@ const router = express.Router();
 
 router.get("/", landlordController.getLandlords);
 router.post("/register", landlordController.registerLandlord);
-
+router.patch("/:landlordId", landlordController.updateLandlord);
+router.delete("/:landlordId", landlordController.deleteLandlord);
 module.exports = router;
