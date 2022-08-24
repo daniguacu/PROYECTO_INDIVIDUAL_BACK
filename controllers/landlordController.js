@@ -54,6 +54,11 @@ const landlordController = {
           landlordToBeDelete,
         },
       });
+    },
+    getLandlordbyid: async function (req, res) {
+      const { landlordId } = req.params;
+      const landlord = await Landlord.findById(landlordId);
+      res.json(landlord);
     }
    
    
