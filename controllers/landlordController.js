@@ -15,6 +15,7 @@ const landlordController = {
     newLandlord.lastname = lastname;   
     newLandlord.email = email;
     newLandlord.phone = phone;
+    
     const searchEmail = await Landlord.findOne({ email: email });
     if (!searchEmail){
       try {
