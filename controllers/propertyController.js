@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Property = require("../models/propertyModel");
+const Landlord = require("../models/landlordModel");
 
 const fs = require("fs");
 const { MongoUnexpectedServerResponseError } = require("mongodb");
@@ -20,6 +21,18 @@ const propertyController = {
         
         
         res.json(savedProperty);
+        let array=[]
+        const landlordtoBeUpdated = await Landlord.findById(newProperty.landlord);
+        let property=landlordtoBeUpdated.property
+      
+        array=property.push(newProperty._id)
+      
+      
+        const UpdateLandlordProperty = await Landlord.findByIdAndUpdate(
+        newProperty.landlord,
+        { property },
+        { new: true }
+      );
         
       } catch (error) {
         console.log("Error");
