@@ -8,6 +8,7 @@ const landlordController = {
     const landlords = await Landlord.find();
     res.json(landlords);
   },
+  
   registerLandlord: async function (req, res) {
     const {name,lastname,email,phone} = req.body;
     const newLandlord = new Landlord();

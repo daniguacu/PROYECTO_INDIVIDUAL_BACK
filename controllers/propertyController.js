@@ -7,11 +7,12 @@ const { MongoUnexpectedServerResponseError } = require("mongodb");
 const propertyController = {
   
   addProperty: async function (req, res) {
-    const {address,landlord} = req.body;
+    const {address,landlord,landlordname} = req.body;
     
     const newProperty = new Property();
     newProperty.address = address;
     newProperty.landlord = landlord;   
+    newProperty.landlordname = landlordname; 
     
    
     const searchAddress = await Property.findOne({ address: address });
@@ -43,12 +44,46 @@ const propertyController = {
     }
     
   },
-  getPropertiesbyLandlordId: async function(req,res){
-    const{landlord}=req.params
-    const propertiesFounded=await Property.find({landlord})
+  getPropertiesbyId: async function(req,res){
+    const{property}=req.body
+    const propertiesFounded=await Property.findOne({property})
     res.json(propertiesFounded)
 
-  }
+  },
+  getProperties: async function(req,res){
+    
+    const propertiesFounded=await Property.find()
+    res.json(propertiesFounded)
+
+  },
+  updateProperty: async function (req, res) {
+    const {propertyId} = req.params;
+    const property = await Property.findById(propertyId);
+    if (property === null) {
+      return res.status(404).json({
+        error: "property not found",
+      })
+    }else {
+        const {address} =req.body;
+        const updatedProperty = await Property.findByIdAndUpdate(
+          propertyId,
+          { address},
+          { new: true }
+        );
+        res.json(updatedProperty);
+      }
+    },
+    deleteProperty: async function (req, res) {
+      const { propertyId } = req.params;
+  
+      const propertyToBeDelete = await Property.findByIdAndDelete(propertyId)
+      res.status(200).json({
+        prperyDeleted: {
+          propertyToBeDelete,
+        },
+      });
+    },
+
    
    
   };

@@ -19,6 +19,9 @@ const tenantController = {
     newTenant.phone = phone;
     newTenant.property=property;
     newTenant.landlord=landlord;
+
+   
+    
     
     
       try {
@@ -27,6 +30,7 @@ const tenantController = {
       } catch (error) {
         console.log("Error");
       }
+      
     
   }
   
