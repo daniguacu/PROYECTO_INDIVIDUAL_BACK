@@ -11,12 +11,14 @@ const tenantController = {
   registerTenant: async function (req, res) {
     
 
-    const {name,lastname,email,phone,property,landlord} = req.body;
+    const {name,lastname,email,phone,address,landlordname,property,landlord} = req.body;
     const newTenant = new Tenant();
     newTenant.name = name;
     newTenant.lastname = lastname;   
     newTenant.email = email;
     newTenant.phone = phone;
+    newTenant.address = address;
+    newTenant.landlordname = landlordname;
     newTenant.property=property;
     newTenant.landlord=landlord;
 
@@ -32,7 +34,31 @@ const tenantController = {
       }
       
     
-  }
+  },
+  deleteTenant: async function (req, res) {
+    const { tenantId } = req.params;
+
+    const tenantToBeDelete = await Tenant.findByIdAndDelete(tenantId)
+    res.status(200).json({
+      tenantDeleted: {
+        tenantToBeDelete,
+      },
+    });
+  },
+  updateTenant: async function (req, res) {
+    const {tenantId} = req.params;
+    
+    
+        const { name,lastname, phone, email} =req.body;
+        const updatedTenant = await Tenant.findByIdAndUpdate(
+          tenantId,
+          { name,lastname, phone, email},
+          { new: true }
+        );
+        res.json(updatedTenant);
+    }
+    
+    
   
    
    

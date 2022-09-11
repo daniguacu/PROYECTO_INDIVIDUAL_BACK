@@ -45,8 +45,8 @@ const propertyController = {
     
   },
   getPropertiesbyId: async function(req,res){
-    const{property}=req.body
-    const propertiesFounded=await Property.findOne({property})
+    const{_id}=req.params
+    const propertiesFounded=await Property.findById({_id})
     res.json(propertiesFounded)
 
   },
@@ -58,12 +58,9 @@ const propertyController = {
   },
   updateProperty: async function (req, res) {
     const {propertyId} = req.params;
-    const property = await Property.findById(propertyId);
-    if (property === null) {
-      return res.status(404).json({
-        error: "property not found",
-      })
-    }else {
+    
+    
+    
         const {address} =req.body;
         const updatedProperty = await Property.findByIdAndUpdate(
           propertyId,
@@ -71,7 +68,7 @@ const propertyController = {
           { new: true }
         );
         res.json(updatedProperty);
-      }
+      
     },
     deleteProperty: async function (req, res) {
       const { propertyId } = req.params;

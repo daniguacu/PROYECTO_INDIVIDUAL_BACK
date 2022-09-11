@@ -6,6 +6,8 @@ const TenantSchema = new Schema({
   lastname: String,
   email: String,
   phone:String,
+  address:String,
+  landlordname:String,
   property:{ type: Schema.Types.ObjectId, ref: "Property" },
   landlord:{ type: Schema.Types.ObjectId, ref: "Landlord" }
   
