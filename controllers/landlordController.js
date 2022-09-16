@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const Landlord = require("../models/landlordModel");
 const Property=require("../models/propertyModel");
+const Tenant=require("../models/tenantModel");
 const { getToken } = require("../utils/tokens");
 const fs = require("fs");
 const { MongoUnexpectedServerResponseError } = require("mongodb");
@@ -57,17 +58,24 @@ const landlordController = {
         ,
         { landlordname },
         { new: true });
+        const UpdateLandlordTenant = await Tenant.updateMany({landlord:landlord._id}
+          ,
+          { landlordname },
+          { new: true });
       }
     },
     deleteLandlord: async function (req, res) {
       const { landlordId } = req.params;
-  
+      const propertyToBeDelete = await Property.deleteMany({landlord:landlordId})
+      const tenantToBeDelete = await Tenant.deleteMany({landlord:landlordId})
+      
       const landlordToBeDelete = await Landlord.findByIdAndDelete(landlordId )
       res.status(200).json({
         landlordDeleted: {
           landlordToBeDelete,
         },
       });
+      
     },
     getLandlordbyid: async function (req, res) {
       const { landlordId } = req.params;

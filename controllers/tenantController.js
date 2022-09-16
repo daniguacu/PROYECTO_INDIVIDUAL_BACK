@@ -10,7 +10,7 @@ const tenantController = {
   },
   registerTenant: async function (req, res) {
     
-
+    
     const {name,lastname,email,phone,address,landlordname,property,landlord} = req.body;
     const newTenant = new Tenant();
     newTenant.name = name;
@@ -22,7 +22,8 @@ const tenantController = {
     newTenant.property=property;
     newTenant.landlord=landlord;
 
-   
+    const searchEmail = await Tenant.findOne({ email: email });
+    if (!searchEmail){
     
     
     
@@ -34,6 +35,9 @@ const tenantController = {
       }
       
     
+    } else{
+      res.json("tenant exists");
+      }
   },
   deleteTenant: async function (req, res) {
     const { tenantId } = req.params;
@@ -49,13 +53,19 @@ const tenantController = {
     const {tenantId} = req.params;
     
     
+    
         const { name,lastname, phone, email} =req.body;
+        const searchEmail = await Tenant.findOne({ email: email });
+        if (!searchEmail){
         const updatedTenant = await Tenant.findByIdAndUpdate(
           tenantId,
           { name,lastname, phone, email},
           { new: true }
         );
-        res.json(updatedTenant);
+        res.json(updatedTenant);}else{
+          res.json("tenant exists")
+        }
+        
     }
     
     

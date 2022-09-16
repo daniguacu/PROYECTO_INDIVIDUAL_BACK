@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const Property = require("../models/propertyModel");
 const Landlord = require("../models/landlordModel");
+const Tenant = require("../models/tenantModel");
 
 const fs = require("fs");
 const { MongoUnexpectedServerResponseError } = require("mongodb");
@@ -62,17 +63,27 @@ const propertyController = {
     
     
         const {address} =req.body;
+        const searchAddress = await Property.findOne({ address: address });
+        if (!searchAddress){
         const updatedProperty = await Property.findByIdAndUpdate(
           propertyId,
           { address},
           { new: true }
         );
         res.json(updatedProperty);
+        const Updatetenantaddress = await Tenant.updateMany({property:propertyId}
+          ,
+          { address },
+          { new: true });
+        
       
+       }else{
+        res.json("property exists")
+        }
     },
     deleteProperty: async function (req, res) {
       const { propertyId } = req.params;
-  
+      const tenantToBeDelete = await Tenant.deleteMany({property:propertyId})
       const propertyToBeDelete = await Property.findByIdAndDelete(propertyId)
       res.status(200).json({
         prperyDeleted: {
