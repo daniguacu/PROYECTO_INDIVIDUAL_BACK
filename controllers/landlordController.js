@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Landlord = require("../models/landlordModel");
+const Property=require("../models/propertyModel");
 const { getToken } = require("../utils/tokens");
 const fs = require("fs");
 const { MongoUnexpectedServerResponseError } = require("mongodb");
@@ -45,6 +46,17 @@ const landlordController = {
           { new: true }
         );
         res.json(updatedLandlord);
+        
+        
+        let landlordname=updatedLandlord.name
+      
+        
+      
+      
+        const UpdateLandlordProperty = await Property.updateMany({landlord:landlord._id}
+        ,
+        { landlordname },
+        { new: true });
       }
     },
     deleteLandlord: async function (req, res) {
