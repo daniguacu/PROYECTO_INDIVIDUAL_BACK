@@ -5,8 +5,11 @@ const UserSchema = new Schema({
   name: String,
   lastname: String,
   email: String,
-  password: String
-  //books : [{ type: Schema.Types.ObjectId, ref: "Books" }]
+  password: String,
+  property:[{ type: Schema.Types.ObjectId, ref: "Property" }],
+  landlord:[{ type: Schema.Types.ObjectId, ref: "Landlord" }],
+  tenant:[{ type: Schema.Types.ObjectId, ref: "Tenant" }]
+  
   
 });
 
