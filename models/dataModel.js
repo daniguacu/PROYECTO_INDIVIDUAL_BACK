@@ -16,7 +16,8 @@ const DataSchema = new Schema({
   propertyidinlandlord:[],
   propertyid : [{ type: Schema.Types.ObjectId, ref: "Property" }]  , 
   charge:[{amount:Number,chargedate:String,postingdate:String,description:String,ref:Number,categ:String}],
-  landlordaddress:String
+  landlordaddress:String,
+  type:String
 });
 
 module.exports = mongoose.model("Data", DataSchema);

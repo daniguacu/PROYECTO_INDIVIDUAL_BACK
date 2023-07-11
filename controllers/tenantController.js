@@ -20,6 +20,7 @@ const tenantController = {
     let landlordname=findlandlordbyproperty.landlordname
     let address=findlandlordbyproperty.address
     let landlord=findlandlordbyproperty.landlord
+    let type="tenants"
     function ajustarnombreyappellido (arrayinfunction){
       const tolowercase=(element)=>{
               return element.toLowerCase("")
@@ -61,7 +62,7 @@ const tenantController = {
     newTenant.property=property;
     newData.propertyid = property;
     newTenant.landlord=landlord;
-
+    newData.type=type 
 
     const searchEmail = await Tenant.findOne({ email: email });
     if (!searchEmail){ 

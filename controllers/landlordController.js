@@ -14,6 +14,7 @@ const landlordController = {
   
   registerLandlord: async function (req, res) {
     let {name,lastname,address,email,phone} = req.body;
+    let type="landlords"
     const namespliced=name.split(" ")
     const lastnamespliced=lastname.split(" ")
 
@@ -54,7 +55,7 @@ const landlordController = {
     newData.email = email;
     newLandlord.phone = phone;
     newData.phone = phone;
-    
+    newData.type=type
     const searchEmail = await Landlord.findOne({ email: email });
     if (!searchEmail){
       try {

@@ -14,12 +14,14 @@ const propertyController = {
     const landlordname=landlorddata.name+" "+landlorddata.lastname   
     const newProperty = new Property();
     const newData=new Data();
+    let type="properties"
     newProperty.address = address;
     newData.address = address;
     newProperty.landlord = landlord;   
     
     newProperty.landlordname = landlordname; 
-    newData.landlordname = landlordname;  
+    newData.landlordname = landlordname; 
+    newData.type=type 
     const searchAddress = await Property.findOne({ address: address });
     if (!searchAddress){
       try {
